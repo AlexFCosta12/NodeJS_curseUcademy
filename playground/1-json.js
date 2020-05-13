@@ -20,3 +20,4 @@ data.name = 'Alexandre Costa'
 data.planet ='Terra';
 const bookJSON = JSON.stringify(data);
 fs.writeFileSync('1-json.json',bookJSON)
+console.log("Olas123")
