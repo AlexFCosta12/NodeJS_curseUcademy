@@ -1,4 +1,5 @@
 console.log ("notes.js");
+var chalk = require ('chalk');
 //fs.writeFileSync('notes.txt','TesteCreate Notes');
 const fs = require('fs');
 
@@ -27,15 +28,17 @@ const addNote = function (title,body){
 
 const removeNote = function(title){
     const notes = loadNotes();
-    const findNotes = notes.filter(function (note){
-        return note.title === title;
+    const notesToKeep = notes.filter(function (note){
+        return note.title !== title;
     })
-    if (findNotes.length === 0){
-        console.log ('Não foi encontrada nenhuma nota com esse title');
+
+    if (notes.length === notesToKeep.length && notes.length !== 0){
+        // Notes not remove
+        console.log (chalk.bgRed('Note not removed!'));
     }else {
-        //notes.pop()
-        console.log ('Remove')
-        saveNotes (notes);
+        // Note Remove
+        console.log (chalk.bgGreen('Note Removed!'));
+        saveNotes(notesToKeep);
     }
 }
 
