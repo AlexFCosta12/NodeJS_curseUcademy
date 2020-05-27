@@ -1,17 +1,12 @@
-console.log ("notes.js");
 var chalk = require ('chalk');
 //fs.writeFileSync('notes.txt','TesteCreate Notes');
 const fs = require('fs');
 
-const getNotes = () => {
-    return 'Your Notes'
-}
-
 const addNote = (title,body) => {
     const notes = loadNotes();
-    const duplicateNotes = notes.filter((note) => note.title === title);
+    const duplicateNote = notes.find((note) => note.title === title)
 
-    if (duplicateNotes.length === 0){
+    if (!duplicateNote){
         notes.push({
             title: title,
             body: body
@@ -42,11 +37,22 @@ const listNotes = () => {
     const notes = loadNotes();
     if (notes.length !== 0){
         console.log (chalk.bgGreen('Your Notes'));
-        notes.forEach(note  => {
+        notes.forEach((note)  => {
             console.log ("Title: "+ note.title+" Body "+note.body);
         });
     }else{
         console.log(chalk.bgRed('Your Notes is Empty !'));
+    }
+}
+
+const readNote = (title) => {
+    const notes = loadNotes();
+    const noteRead = notes.find((note) => note.title === title)
+    if (noteRead){
+        console.log (chalk.inverse('Title - ' + noteRead.title));
+        console.log ('Body - ' + noteRead.body);
+    }else {
+        console.log (chalk.bgRed('No Note Found!'));  
     }
 }
 
@@ -66,8 +72,8 @@ const loadNotes = () => {
 }
 
 module.exports = {
-    getNotes: getNotes,
     addNote: addNote,
     removeNote: removeNote,
-    listNotes: listNotes
+    listNotes: listNotes,
+    readNote: readNote
 }
